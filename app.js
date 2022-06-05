@@ -13,6 +13,8 @@ var app = express();
 var fileUpload=require('express-fileupload')
 var db=require('./config/connection')
 
+process.env.PWD = process.cwd()
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -29,6 +31,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(express.static(process.env.PWD + '/public/product-images'));
 
 app.use(fileUpload())
 db.connect((err)=>{
