@@ -12,6 +12,7 @@ var hbs = require('express-handlebars')
 var app = express();
 var fileUpload=require('express-fileupload')
 var db=require('./config/connection')
+var session=require('express-session')
 
 process.env.PWD = process.cwd()
 
@@ -35,6 +36,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(process.env.PWD + '/public/product-images'));
 
 app.use(fileUpload())
+app.use(session({secret:"key",cookie:{maxAge:60000}}))
+
 db.connect((err)=>{
     if(err) console.log("Connection Error"+err)
     else console.log("Database Connected to port ")
